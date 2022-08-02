@@ -1,12 +1,16 @@
 .cartItem {
     display: grid;
     grid-template-columns: 30px 80px 1fr;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     --size-1: 45px;
     --size-2: 70px;
     padding: 16px 0;
     gap: 16px;
     border-bottom: 1px solid #eeeeee;
+}
+
+.cartItem:not(:first-child) {
+    padding-top: 0;
 }
 
 .cartImage {
@@ -67,6 +71,7 @@ img {
     display: grid;
     grid-template-columns: 46px 96px 1fr;
     border-bottom: 1px solid #ccc;
+    padding: 16px 0;
 }
 
 .cartList {
