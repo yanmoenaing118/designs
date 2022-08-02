@@ -78,3 +78,15 @@ img {
 .mycart {
     max-width: 800px;
 }
+
+.cartDelete {
+
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cartItem:hover .cartDelete {
+    opacity: 1;
+}
