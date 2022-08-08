@@ -12,10 +12,11 @@ export default function PersonalInfo({ onNext }) {
 
   function handleFormSubmit(data) {
     console.log(data);
+    onNext();
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <Input name="fullname" placeholder="Name" register={register} />
       <Input name="email" placeholder="Email" register={register} />
       <Input name="phone" placeholder="Phone" register={register} />

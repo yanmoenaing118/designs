@@ -8,7 +8,7 @@ export default function useCity() {
 
   const { data, error } = useSWRImmutable(
     division !== ""
-      ? `https://d2-olive.venuslab.co/api/location/city?division=${division}`
+      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/city?division=${division}`
       : null,
     fetcher
   );

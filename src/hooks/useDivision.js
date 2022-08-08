@@ -9,7 +9,7 @@ export default function useDivision() {
 
   const { data, error } = useSWRImmutable(
     country !== ""
-      ? `https://d2-olive.venuslab.co/api/location/division?country=${country}`
+      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/country/${country}`
       : null,
     fetcher
   );

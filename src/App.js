@@ -3,6 +3,7 @@ import ReactSelectInput from "./components/ReactSelectInput";
 import { useForm, Controller } from "react-hook-form";
 import { phone } from "phone";
 import PersonalInfo from "./components/checkout/PersonalInfo";
+import Addresses from "./components/checkout/Address";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -20,7 +21,8 @@ export default function App() {
       content = <PersonalInfo onNext={() => setStep(step + 1)} />;
       break;
     case 2:
-      return;
+      content = <Addresses onPrev={() => setStep(step - 1)} />;
+      break;
     default:
       return <div>N</div>;
   }
