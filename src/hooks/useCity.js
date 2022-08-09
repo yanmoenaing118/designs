@@ -4,11 +4,10 @@ import fetcher from "../lib/fetcher";
 
 export default function useCity() {
   const [division, setDivision] = useState("");
-  const router = useRouter();
 
   const { data, error } = useSWRImmutable(
     division !== ""
-      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/city?division=${division}`
+      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/division/${division}`
       : null,
     fetcher
   );

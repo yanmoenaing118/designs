@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { phone } from "phone";
 import PersonalInfo from "./components/checkout/PersonalInfo";
 import Addresses from "./components/checkout/Address";
+import ConfirmCheckout from "./components/checkout/ConfirmCheckout";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -12,7 +13,7 @@ const options = [
 ];
 
 export default function App() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   let content = null;
 
@@ -21,8 +22,11 @@ export default function App() {
       content = <PersonalInfo onNext={() => setStep(step + 1)} />;
       break;
     case 2:
-      content = <Addresses onPrev={() => setStep(step - 1)} />;
+      content = <Addresses onPrev={() => setStep(step - 1)} onNext={() => setStep(step + 1)} />;
       break;
+      case 3:
+        content = <ConfirmCheckout onPrev={() => setStep(step - 1)} onNext={() => setStep(step + 1)} />;
+        break;
     default:
       return <div>N</div>;
   }

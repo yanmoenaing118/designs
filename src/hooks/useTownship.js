@@ -9,7 +9,7 @@ export default function useTownship() {
 
   const { data, error } = useSWRImmutable(
     city !== ""
-      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/township?city=${city}`
+      ? `https://d2-olive-api.venuslab.co/api/v1.0.0/location/city/${city}`
       : null,
     fetcher
   );

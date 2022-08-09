@@ -5,11 +5,11 @@ export default function ReactSelectInput({
   options,
   placeholder,
   onChange,
-  value
+  value,
 }) {
   return (
     <Select
-    value={value}
+      value={value}
       options={options}
       placeholder={placeholder}
       onChange={(value) => onChange(value)}
