@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 import Select from "./../form/Select";
 import useCountry from "../../hooks/useCountry";
 import useDivision from "../../hooks/useDivision";
@@ -10,12 +10,9 @@ import { useEffect } from "react";
 import useCheckout from "../../hooks/useCheckout";
 
 export default function Addresses({ onPrev, onNext }) {
+  const { checkoutState, saveAddress } = useCheckout();
 
-  const { checkoutState } = useCheckout();
-
-  const { handleSubmit, control, watch } = useForm({
-    defaultValues: {},
-  });
+  const { handleSubmit, control, watch, setValue, getValues } = useForm();
 
   const { countries } = useCountry();
   const { divisions, onCountryChange } = useDivision();
@@ -25,21 +22,39 @@ export default function Addresses({ onPrev, onNext }) {
   const country = watch("country");
   const division = watch("division");
   const city = watch("city");
+  const township = watch("township");
+
+
 
   useEffect(() => {
+    if (!country) return;
+    if (division?.value !== country?.value) {
+      setValue("division", null);
+      setValue("city", null);
+      setValue("township", null);
+    }
     onCountryChange(country?.value);
   }, [country]);
 
   useEffect(() => {
+    if (!division) return;
+    if (city && city?.value !== division?.value) {
+      setValue("city", null);
+      setValue("township", null);
+    }
     onDivisionChange(division?.value);
   }, [division]);
 
   useEffect(() => {
+    if (!city) return;
+    if (township && township?.value !== city?.value) {
+      setValue("township", null);
+    }
     onCityChange(city?.value);
   }, [city]);
 
   function handleFormSubmit(data) {
-    console.log(data);
+    saveAddress(data);
     onNext();
   }
 
@@ -47,8 +62,9 @@ export default function Addresses({ onPrev, onNext }) {
     <form onSubmit={handleSubmit(handleFormSubmit)}>
       <div className="mb-4">
         <Controller
-          name="address.country"
+          name="country"
           control={control}
+          defaultValue={checkoutState.user.address.country}
           render={({ field: { onChange, value } }) => (
             <Select
               placeholder="Select Country"
@@ -62,10 +78,12 @@ export default function Addresses({ onPrev, onNext }) {
 
       <div className="mb-4">
         <Controller
-          name="address.division"
+          name="division"
           control={control}
+          defaultValue={checkoutState.user.address.division}
           render={({ field: { onChange, value } }) => (
             <Select
+              disabled={!country}
               placeholder="Select Division"
               value={value}
               options={getItems(divisions?.results || []) || []}
@@ -77,10 +95,12 @@ export default function Addresses({ onPrev, onNext }) {
 
       <div className="mb-4">
         <Controller
-          name="address.city"
+          name="city"
           control={control}
+          defaultValue={checkoutState.user.address.city}
           render={({ field: { onChange, value } }) => (
             <Select
+              disabled={!country || !division}
               placeholder="Select City"
               value={value}
               onChange={onChange}
@@ -92,10 +112,12 @@ export default function Addresses({ onPrev, onNext }) {
 
       <div className="mb-4">
         <Controller
-          name="address.township"
+          name="township"
           control={control}
+          defaultValue={checkoutState.user.address.township}
           render={({ field: { onChange, value } }) => (
             <Select
+              disabled={!country || !division || !city}
               placeholder="Select Township"
               value={value}
               onChange={onChange}
@@ -111,14 +133,15 @@ export default function Addresses({ onPrev, onNext }) {
       </div>
     </form>
   );
-
 }
-
 
 function getDefaults(checkoutState) {
   return {
-    
-  }
+    country: checkoutState.user.address.country || null,
+    division: { ...checkoutState.user.address.division } || null,
+    city: { ...checkoutState.user.address.city } || null,
+    township: { ...checkoutState.user.address.township } || null,
+  };
 }
 
 function getItems(items) {

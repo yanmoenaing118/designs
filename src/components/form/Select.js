@@ -6,9 +6,13 @@ export default function ReactSelectInput({
   placeholder,
   onChange,
   value,
+  disabled,
+  
 }) {
   return (
     <Select
+
+      isDisabled={disabled}
       value={value}
       options={options}
       placeholder={placeholder}

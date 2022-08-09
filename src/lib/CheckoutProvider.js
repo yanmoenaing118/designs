@@ -8,10 +8,10 @@ const initialState = {
     email: "",
     phone: "",
     address: {
-      country: "",
-      division: "",
-      city: "",
-      township: "",
+      country: null,
+      division: null,
+      city: null,
+      township: null,
     },
   },
 };
