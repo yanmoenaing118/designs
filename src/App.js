@@ -5,6 +5,7 @@ import { phone } from "phone";
 import PersonalInfo from "./components/checkout/PersonalInfo";
 import Addresses from "./components/checkout/Address";
 import ConfirmCheckout from "./components/checkout/ConfirmCheckout";
+import CheckoutProvider from "./lib/CheckoutProvider";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -13,7 +14,7 @@ const options = [
 ];
 
 export default function App() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
 
   let content = null;
 
@@ -22,19 +23,31 @@ export default function App() {
       content = <PersonalInfo onNext={() => setStep(step + 1)} />;
       break;
     case 2:
-      content = <Addresses onPrev={() => setStep(step - 1)} onNext={() => setStep(step + 1)} />;
+      content = (
+        <Addresses
+          onPrev={() => setStep(step - 1)}
+          onNext={() => setStep(step + 1)}
+        />
+      );
       break;
-      case 3:
-        content = <ConfirmCheckout onPrev={() => setStep(step - 1)} onNext={() => setStep(step + 1)} />;
-        break;
+    case 3:
+      content = (
+        <ConfirmCheckout
+          onPrev={() => setStep(step - 1)}
+          onNext={() => setStep(step + 1)}
+        />
+      );
+      break;
     default:
-      return <div>N</div>;
+      return <div></div>;
   }
 
   return (
-    <div className="max-w-sm mx-auto bg-white shadow-md my-5 p-10">
-      <h1 className="font-extrabold mb-5">Step - {step} of 3 </h1>
-      {content}
-    </div>
+    <CheckoutProvider>
+      <div className="max-w-sm mx-auto bg-white shadow-md my-5 p-10">
+        <h1 className="font-extrabold mb-5">Step - {step} of 3 </h1>
+        {content}
+      </div>
+    </CheckoutProvider>
   );
 }

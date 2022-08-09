@@ -1,17 +1,16 @@
 import { useForm } from "react-hook-form";
+import useCheckout from "../../hooks/useCheckout";
 import Input from "../form/Input";
 import Button from "../utils/Button";
 export default function PersonalInfo({ onNext }) {
+  const { checkoutState, savePersonalInfo } = useCheckout();
+
   const { register, handleSubmit } = useForm({
-    defaultValues: {
-      fullname: "",
-      email: "",
-      phone: "",
-    },
+    defaultValues: getDefaults(checkoutState),
   });
 
   function handleFormSubmit(data) {
-    console.log(data);
+    savePersonalInfo(data);
     onNext();
   }
 
@@ -23,4 +22,12 @@ export default function PersonalInfo({ onNext }) {
       <Button type="submit" text="Next" />
     </form>
   );
+}
+
+function getDefaults(checkoutState) {
+  return {
+    fullname: checkoutState.user.fullname || "",
+    email: checkoutState.user.email || "",
+    phone: checkoutState.user.phone || "",
+  };
 }

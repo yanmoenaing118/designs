@@ -7,8 +7,12 @@ import useTownship from "../../hooks/useTownship";
 
 import Button from "../utils/Button";
 import { useEffect } from "react";
+import useCheckout from "../../hooks/useCheckout";
 
 export default function Addresses({ onPrev, onNext }) {
+
+  const { checkoutState } = useCheckout();
+
   const { handleSubmit, control, watch } = useForm({
     defaultValues: {},
   });
@@ -107,6 +111,14 @@ export default function Addresses({ onPrev, onNext }) {
       </div>
     </form>
   );
+
+}
+
+
+function getDefaults(checkoutState) {
+  return {
+    
+  }
 }
 
 function getItems(items) {
